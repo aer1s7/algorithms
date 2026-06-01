@@ -42,33 +42,42 @@ void printHeap(vector<int> data){
     cout << endl;
 }
 
-void heapPush(vector<int>& data, int time){
-    data.push_back(time);
+void heapPush(vector<int>& data, int value){
+    data.push_back(value);
     siftUp(data, data.size() - 1);
 }
 
-void heapPop(vector<int>& data){
+int heapPop(vector<int>& data){
+    int result = data[0];
     data[0] = data.back();
     data.pop_back();
     if (!data.empty()){
         siftDown(data, 0);
     }
+    return result;
+}
+
+void buildHeap(vector<int>& data){
+    int n = data.size();
+    for (int i = n / 2 - 1; i >= 0; --i){
+        siftDown(data, i);
+    }
 }
 
 int main(){
     setlocale(LC_ALL, "ru_RU.UTF-8");
-    vector<int> heap;
-    heapPush(heap, 14);
-    heapPush(heap, 6);
-    heapPush(heap, 9);
-    heapPush(heap, 20);
-    heapPush(heap, 17);
-    heapPush(heap, 5);
-    cout << "Массив работ для проверки: ";
-    printHeap(heap);
-    cout << "Порядок проверки работ (по времени сдачи): ";
-    while (!heap.empty()){
-        cout << heap[0] << " ";
-        heapPop(heap, heap[0]);
+    vector<int> ropes = {13,8,3,10,5,12,15};
+    buildHeap(ropes);
+    cout << "Исходные длины канатов: ";
+    printHeap(ropes);
+    cout << "Порядок связывания канатов: " << endl;
+    int total = 0;
+    while (ropes.size() > 1){
+        int rope1 = heapPop(ropes);
+        int rope2 = heapPop(ropes);
+        int step = rope1 + rope2;
+        total += step;
+        cout << rope1 << " + " << rope2 << " = " << step << " (Сумм. " << total << ")" << endl;
     }
+    cout << "Суммарные затраты: " << total;
 }
