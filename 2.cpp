@@ -69,6 +69,6 @@ int main(){
     cout << "Порядок проверки работ (по времени сдачи): ";
     while (!heap.empty()){
         cout << heap[0] << " ";
-        heapPop(heap, heap[0]);
+        heapPop(heap);
     }
 }
